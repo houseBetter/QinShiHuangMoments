@@ -41,7 +41,7 @@ jobs:
 
       # Step 3: Install dependencies and build project
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --loglevel verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
