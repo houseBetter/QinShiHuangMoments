@@ -25,10 +25,13 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       # Step 3: Install dependencies and build project
       - name: Install Dependencies
         run: npm ci || npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Production Assets
         run: npm run build
@@ -55,5 +58,6 @@ jobs:
 
       # Step 6: Invalidate CloudFront CDN Cache (for updates to take effect immediately)
       - name: Invalidate CloudFront Cache
+        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
