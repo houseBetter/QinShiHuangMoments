@@ -25,7 +25,13 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
+          # registry-url: 'https://registry.npmjs.org'
+
+      - name: Configure NPM
+        # 强制将 Token 写入到全局的 .npmrc 中
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
 
       # Debug Token
       - name: Debug Token
