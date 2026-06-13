@@ -27,6 +27,12 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
+      # Debug Token
+      - name: Debug Token
+        run: echo "Token length is ${#NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # Step 3: Install dependencies and build project
       - name: Install Dependencies
         run: npm ci
